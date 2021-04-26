@@ -88,6 +88,26 @@ class GameServiceTest {
     }
 
     @Test
+    void connectToGame_whenNullPlayerNameInput_thenThrowsException() {
+        try {
+            Game _game = gameService.createGame(getPLayer("Player1"));
+            gameService.connectToGame(getPLayer(null), _game.getId());
+        } catch (InvalidParamException | InvalidGameException e) {
+            assertEquals(InvalidParamException.MESSAGE_INVALID_PLAYER, e.getMessage());
+        }
+    }
+
+    @Test
+    void connectToGame_whenNullPlayerInput_thenThrowsException() {
+        try {
+            Game _game = gameService.createGame(getPLayer("Player1"));
+            gameService.connectToGame(null, _game.getId());
+        } catch (InvalidParamException | InvalidGameException e) {
+            assertEquals(InvalidParamException.MESSAGE_INVALID_PLAYER, e.getMessage());
+        }
+    }
+
+    @Test
     void connectToGame_whenNotValidGameIdInput_thenThrowsException() {
         try {
             gameService.createGame(getPLayer("Player1"));
