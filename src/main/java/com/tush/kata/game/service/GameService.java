@@ -57,7 +57,7 @@ public class GameService {
             throw new InvalidGameException(InvalidGameException.MESSAGE_GAME_NOT_FOUND);
         }
         Game game = GameData.getInstance().getGames().get(gameStep.getGameId());
-        if (game.getStatus().equals(FINISHED)) {
+        if (game.getStatus().equals(FINISHED) || game.getStatus().equals(DRAW)) {
             throw new InvalidGameException(InvalidGameException.MESSAGE_GAME_FINISHED);
         }
         if(game.getNextPlayer() != gameStep.getType()) {
@@ -76,6 +76,8 @@ public class GameService {
             game.setWinner(PlayerType.X);
         } else if (Boolean.TRUE.equals(oWinner)) {
             game.setWinner(PlayerType.O);
+        } else if(Boolean.TRUE.equals(checkIfDraw(game.getBoard()))){
+            game.setStatus(DRAW);
         }
 
         if(game.getNextPlayer() == PlayerType.X) {
@@ -86,6 +88,17 @@ public class GameService {
 
         GameData.getInstance().setGame(game);
         return game;
+    }
+
+    private Boolean checkIfDraw(int[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if(board[i][j] == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private Boolean checkWinner(int[][] board, PlayerType playerType) {

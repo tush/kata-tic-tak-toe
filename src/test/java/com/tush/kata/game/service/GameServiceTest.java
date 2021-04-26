@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -181,6 +179,40 @@ class GameServiceTest {
     }
 
     @Test
+    void playGameStep_whenGameIsDrawn_thenThrowsException() throws InvalidParamException {
+        Game game = gameService.createGame(getPLayer("Player1"));
+        game.setPlayerO(getPLayer("Player2"));
+        game.setStatus(GameStatus.DRAW);
+        try {
+            GameStep gameStep = getGameStep(PlayerType.X, game.getId(), 0, 0);
+            gameStep.setGameId(game.getId());
+            gameService.playGameStep(gameStep);
+        } catch (InvalidGameException e) {
+            assertEquals(InvalidGameException.MESSAGE_GAME_FINISHED, e.getMessage());
+        }
+    }
+
+    @Test
+    void playGameStep_whenNoWinnerAndNoEmptySquare_thenGameIsDrawn() throws InvalidParamException, InvalidGameException {
+        Game game = gameService.createGame(getPLayer("Player1"));
+        game.setPlayerO(getPLayer("Player2"));
+        game.getBoard()[0][0] = PlayerType.X.getValue();
+        game.getBoard()[0][1] = PlayerType.O.getValue();
+        game.getBoard()[0][2] = PlayerType.O.getValue();
+        game.getBoard()[1][0] = PlayerType.O.getValue();
+        game.getBoard()[1][1] = PlayerType.X.getValue();
+        game.getBoard()[1][2] = PlayerType.X.getValue();
+        game.getBoard()[2][0] = PlayerType.X.getValue();
+        game.getBoard()[2][2] = PlayerType.O.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.X, game.getId(), 2, 1);
+        gameStep.setGameId(game.getId());
+        gameService.playGameStep(gameStep);
+
+        assertEquals(GameStatus.DRAW.toString(), game.getStatus().toString());
+    }
+
+    @Test
     void playGameStep_whenValidInput_thenReturnsGame() throws InvalidParamException, InvalidGameException {
         String playerXName = "Player1";
         String playerOName = "Player2";
@@ -200,7 +232,7 @@ class GameServiceTest {
         assertEquals(PlayerType.O.toString(), game.getNextPlayer().toString());
         assertNotNull(game.getBoard());
 
-        assertEquals(game.getBoard()[0][0], gameStep.getType().X.getValue());
+        assertEquals(game.getBoard()[0][0], PlayerType.X.getValue());
     }
 
     @Test
