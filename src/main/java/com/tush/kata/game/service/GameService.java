@@ -4,6 +4,7 @@ import com.tush.kata.game.data.GameData;
 import com.tush.kata.game.exception.InvalidGameException;
 import com.tush.kata.game.exception.InvalidParamException;
 import com.tush.kata.game.model.Game;
+import com.tush.kata.game.model.GameStep;
 import com.tush.kata.game.model.Player;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +45,20 @@ public class GameService {
         }
         game.setPlayerO(playerO);
         game.setStatus(IN_PROGRESS);
+        GameData.getInstance().setGame(game);
+        return game;
+    }
+
+    public Game playGameStep(GameStep gameStep) throws InvalidGameException {
+        if (!GameData.getInstance().getGames().containsKey(gameStep.getGameId())) {
+            throw new InvalidGameException(InvalidGameException.MESSAGE_GAME_NOT_FOUND);
+        }
+        Game game = GameData.getInstance().getGames().get(gameStep.getGameId());
+        if (game.getStatus().equals(FINISHED)) {
+            throw new InvalidGameException(InvalidGameException.MESSAGE_GAME_FINISHED);
+        }
+        int[][] board = game.getBoard();
+        board[gameStep.getPosX()][gameStep.getPosY()] = gameStep.getType().getValue();
         GameData.getInstance().setGame(game);
         return game;
     }

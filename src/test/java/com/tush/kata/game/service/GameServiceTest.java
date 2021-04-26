@@ -3,8 +3,10 @@ package com.tush.kata.game.service;
 import com.tush.kata.game.exception.InvalidGameException;
 import com.tush.kata.game.exception.InvalidParamException;
 import com.tush.kata.game.model.Game;
+import com.tush.kata.game.model.GameStep;
 import com.tush.kata.game.model.Player;
 import com.tush.kata.game.model.enums.GameStatus;
+import com.tush.kata.game.model.enums.PlayerType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +23,15 @@ class GameServiceTest {
         Player player = new Player();
         player.setName(name);
         return player;
+    }
+
+    GameStep getGameStep(PlayerType type, String gameId, int posX, int posY) {
+        GameStep gameStep = new GameStep();
+        gameStep.setType(type);
+        gameStep.setPosX(posX);
+        gameStep.setPosY(posY);
+        gameStep.setGameId(gameId);
+        return gameStep;
     }
 
     @Test
@@ -90,5 +101,51 @@ class GameServiceTest {
         } catch (InvalidParamException | InvalidGameException e) {
             assertEquals(InvalidGameException.MESSAGE_INVALID_GAME, e.getMessage());
         }
+    }
+
+    @Test
+    void playGameStep_whenNotValidInput_thenThrowsException() {
+        try {
+            GameStep gameStep = new GameStep();
+            gameService.playGameStep(gameStep);
+        } catch (InvalidGameException e) {
+            assertEquals(InvalidGameException.MESSAGE_GAME_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Test
+    void playGameStep_whenGameFinished_thenThrowsException() throws InvalidParamException {
+        Game game = gameService.createGame(getPLayer("Player1"));
+        game.setPlayerO(getPLayer("Player2"));
+        game.setStatus(GameStatus.FINISHED);
+        try {
+            GameStep gameStep = new GameStep();
+            gameStep.setGameId(game.getId());
+            gameService.playGameStep(gameStep);
+        } catch (InvalidGameException e) {
+            assertEquals(InvalidGameException.MESSAGE_GAME_FINISHED, e.getMessage());
+        }
+    }
+
+    @Test
+    void playGameStep_whenValidInput_thenReturnsGame() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        GameStep gameStep = getGameStep(PlayerType.X, _game.getId(), 0, 0);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertTrue(!game.getId().isEmpty());
+        assertNotNull(game.getPlayerX());
+        assertEquals(game.getPlayerX().getName(), playerXName);
+        assertNotNull(game.getPlayerO());
+        assertEquals(game.getPlayerO().getName(), playerOName);
+        assertNull(game.getWinner());
+        assertNotNull(game.getBoard());
+
+        assertEquals(game.getBoard()[0][0], gameStep.getType().X.getValue());
     }
 }
