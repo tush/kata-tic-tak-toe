@@ -1,6 +1,7 @@
 package com.tush.kata.game.service;
 
 import com.tush.kata.game.data.GameData;
+import com.tush.kata.game.exception.InvalidGameException;
 import com.tush.kata.game.exception.InvalidParamException;
 import com.tush.kata.game.model.Game;
 import com.tush.kata.game.model.Player;
@@ -26,6 +27,23 @@ public class GameService {
         game.setId(UUID.randomUUID().toString());
         game.setPlayerX(player);
         game.setStatus(NEW);
+        GameData.getInstance().setGame(game);
+        return game;
+    }
+
+    public Game connectToGame(Player playerO, String gameId) throws InvalidParamException, InvalidGameException {
+        if (!GameData.getInstance().getGames().containsKey(gameId)) {
+            throw new InvalidParamException(InvalidParamException.MESSAGE_INVALID_GAME);
+        }
+        if (playerO == null || playerO.getName() == null || playerO.getName().isEmpty()) {
+            throw new InvalidParamException(InvalidParamException.MESSAGE_INVALID_PLAYER);
+        }
+        Game game = GameData.getInstance().getGames().get(gameId);
+        if (game.getPlayerO() != null) {
+            throw new InvalidGameException(InvalidGameException.MESSAGE_INVALID_GAME);
+        }
+        game.setPlayerO(playerO);
+        game.setStatus(IN_PROGRESS);
         GameData.getInstance().setGame(game);
         return game;
     }
