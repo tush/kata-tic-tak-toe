@@ -65,9 +65,9 @@ public class GameService {
         Boolean xWinner = checkWinner(game.getBoard(), PlayerType.X);
         Boolean oWinner = checkWinner(game.getBoard(), PlayerType.O);
 
-        if (xWinner) {
+        if (Boolean.TRUE.equals(xWinner)) {
             game.setWinner(PlayerType.X);
-        } else if (oWinner) {
+        } else if (Boolean.TRUE.equals(oWinner)) {
             game.setWinner(PlayerType.O);
         }
 

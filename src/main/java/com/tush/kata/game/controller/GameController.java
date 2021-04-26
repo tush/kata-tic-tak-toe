@@ -35,14 +35,12 @@ public class GameController {
 
     @PostMapping("/play")
     public Game play(@RequestBody GameStep request) throws InvalidGameException {
-        Game game = gameService.playGameStep(request);
-        return game;
+        return gameService.playGameStep(request);
     }
 
     @GetMapping("/games")
     public List<Game> games() {
-        List<Game> games = new ArrayList<Game>(gameService.getGames().values());
-        return games;
+        return new ArrayList<>(gameService.getGames().values());
     }
 
 }

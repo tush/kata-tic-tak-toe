@@ -273,7 +273,7 @@ class GameControllerTest {
 
     @Test
     void gamesAPI_whenNoGames_thenReturns_EmptyArray() throws Exception {
-        GameData.getInstance().resetGames();
+        GameData.resetGames();
         mockMvc.perform(get("/game/games")
                 .contentType("application/json"))
                 .andExpect(status().isOk())
@@ -282,7 +282,7 @@ class GameControllerTest {
 
     @Test
     void gamesAPI_whenHasGames_thenReturns_GamesArray() throws Exception {
-        GameData.getInstance().resetGames();
+        GameData.resetGames();
         Player player = new Player();
         player.setName("Player1");
         gameService.createGame(player);

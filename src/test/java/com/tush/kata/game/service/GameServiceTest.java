@@ -336,17 +336,17 @@ class GameServiceTest {
 
     @Test
     void getGames_whenNoGames_thenReturns_EmptyArray() {
-        GameData.getInstance().resetGames();
+        GameData.resetGames();
         Map<String, Game> games = gameService.getGames();
         assertTrue(games.isEmpty());
     }
 
     @Test
     void getGames_whenHasGames_thenReturns_GamesArray() throws InvalidParamException {
-        GameData.getInstance().resetGames();
+        GameData.resetGames();
         String playerXName = "Player1";
         gameService.createGame(getPLayer(playerXName));
         Map<String, Game> games = gameService.getGames();
-        assertEquals(games.size(), 1);
+        assertEquals(1, games.size());
     }
 }
