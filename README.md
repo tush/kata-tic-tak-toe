@@ -18,6 +18,7 @@ For further reference, please consider the following sections:
   * Using Terminal / CMD navigate to the project directory 
   * On the project root directory, fire *"mvn package"* command using Terminal / CMD
   * On the project root directory, fire *"mvn spring-boot:run"* command using Terminal / CMD
+  * If above commands are successful, server should be up and running on port 8080: [http://localhost:8080/](http://localhost:8080/)
 
 ### Guides
 The following API's are available:
