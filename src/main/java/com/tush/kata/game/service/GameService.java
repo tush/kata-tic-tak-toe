@@ -9,6 +9,7 @@ import com.tush.kata.game.model.Player;
 import com.tush.kata.game.model.enums.PlayerType;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.UUID;
 
 import static com.tush.kata.game.model.enums.GameStatus.*;
@@ -98,5 +99,9 @@ public class GameService {
             }
         }
         return false;
+    }
+
+    public Map<String, Game> getGames() {
+        return GameData.getInstance().getGames();
     }
 }

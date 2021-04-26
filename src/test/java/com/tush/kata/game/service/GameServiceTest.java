@@ -1,5 +1,6 @@
 package com.tush.kata.game.service;
 
+import com.tush.kata.game.data.GameData;
 import com.tush.kata.game.exception.InvalidGameException;
 import com.tush.kata.game.exception.InvalidParamException;
 import com.tush.kata.game.model.Game;
@@ -10,6 +11,10 @@ import com.tush.kata.game.model.enums.PlayerType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -327,5 +332,21 @@ class GameServiceTest {
         assertNotNull(game.getWinner());
         assertEquals(PlayerType.X.toString(), game.getWinner().toString());
         assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
+
+    @Test
+    void getGames_whenNoGames_thenReturns_EmptyArray() {
+        GameData.getInstance().resetGames();
+        Map<String, Game> games = gameService.getGames();
+        assertTrue(games.isEmpty());
+    }
+
+    @Test
+    void getGames_whenHasGames_thenReturns_GamesArray() throws InvalidParamException {
+        GameData.getInstance().resetGames();
+        String playerXName = "Player1";
+        gameService.createGame(getPLayer(playerXName));
+        Map<String, Game> games = gameService.getGames();
+        assertEquals(games.size(), 1);
     }
 }

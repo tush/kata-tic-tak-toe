@@ -9,6 +9,9 @@ import com.tush.kata.game.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * GameController
  * The Controller class to create API's for Game Engine
@@ -34,6 +37,12 @@ public class GameController {
     public Game play(@RequestBody GameStep request) throws InvalidGameException {
         Game game = gameService.playGameStep(request);
         return game;
+    }
+
+    @GetMapping("/games")
+    public List<Game> games() {
+        List<Game> games = new ArrayList<Game>(gameService.getGames().values());
+        return games;
     }
 
 }

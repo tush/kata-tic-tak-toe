@@ -1,5 +1,6 @@
 package com.tush.kata.game.controller;
 
+import com.tush.kata.game.data.GameData;
 import com.tush.kata.game.exception.InvalidGameException;
 import com.tush.kata.game.exception.InvalidParamException;
 import com.tush.kata.game.model.Game;
@@ -7,6 +8,7 @@ import com.tush.kata.game.model.Player;
 import com.tush.kata.game.model.enums.GameStatus;
 import com.tush.kata.game.model.enums.PlayerType;
 import com.tush.kata.game.service.GameService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -268,4 +271,24 @@ class GameControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(GameStatus.FINISHED.toString()));
     }
 
+    @Test
+    void gamesAPI_whenNoGames_thenReturns_EmptyArray() throws Exception {
+        GameData.getInstance().resetGames();
+        mockMvc.perform(get("/game/games")
+                .contentType("application/json"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.empty()));
+    }
+
+    @Test
+    void gamesAPI_whenHasGames_thenReturns_GamesArray() throws Exception {
+        GameData.getInstance().resetGames();
+        Player player = new Player();
+        player.setName("Player1");
+        gameService.createGame(player);
+        mockMvc.perform(get("/game/games")
+                .contentType("application/json"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
 }

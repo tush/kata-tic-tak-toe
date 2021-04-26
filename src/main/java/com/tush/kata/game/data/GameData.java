@@ -27,4 +27,6 @@ public class GameData {
     public void setGame(Game game) {
         games.put(game.getId(), game);
     }
+
+    public void resetGames() { games = new HashMap<>(); }
 }
