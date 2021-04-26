@@ -9,6 +9,8 @@ public class InvalidGameException extends BaseException {
     public static final String MESSAGE_INVALID_GAME = "Game is not valid anymore";
     public static final String MESSAGE_GAME_NOT_FOUND = "Game not found";
     public static final String MESSAGE_GAME_FINISHED = "Game is already finished";
+    public static final String MESSAGE_INVALID_GAME_STEP = "Its not your turn";
+    public static final String MESSAGE_INVALID_SQUARE = "Square is already used";
 
     public InvalidGameException(String message) { super(message); }
 }

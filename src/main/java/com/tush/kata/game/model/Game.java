@@ -14,6 +14,7 @@ public class Game {
     private GameStatus status;
     private int[][] board;
     private PlayerType winner;
+    private PlayerType nextPlayer;
 
     public String getId() {
         return id;
@@ -62,5 +63,13 @@ public class Game {
     public void setWinner(PlayerType winner) {
         this.winner = winner;
         this.setStatus(GameStatus.FINISHED);
+    }
+
+    public PlayerType getNextPlayer() {
+        return nextPlayer;
+    }
+
+    public void setNextPlayer(PlayerType nextPlayer) {
+        this.nextPlayer = nextPlayer;
     }
 }

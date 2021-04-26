@@ -237,7 +237,7 @@ class GameControllerTest {
     }
 
     @Test
-    void playAPI_whenO_wins_thenReturns_O_as_winner() throws Exception {
+    void playAPI_whenX_wins_thenReturns_O_as_winner() throws Exception {
         Player player = new Player();
         player.setName("Player1");
 
@@ -248,11 +248,11 @@ class GameControllerTest {
         game.setPlayerO(player2);
         game.setStatus(GameStatus.IN_PROGRESS);
         int[][] board = game.getBoard();
-        board[0][0] = PlayerType.O.getValue();
-        board[0][1] = PlayerType.O.getValue();
+        board[0][0] = PlayerType.X.getValue();
+        board[0][1] = PlayerType.X.getValue();
 
         String postData = "{\"gameId\": \""+ game.getId() +"\",\n" +
-                "    \"type\": \"O\",\n" +
+                "    \"type\": \"X\",\n" +
                 "    \"posX\": \"0\",\n" +
                 "    \"posY\": \"2\"}";
 
@@ -267,7 +267,7 @@ class GameControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.playerO.name").value(player2.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.board").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.winner").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.winner").value(PlayerType.O.toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.winner").value(PlayerType.X.toString()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(GameStatus.FINISHED.toString()));
     }
 

@@ -29,6 +29,7 @@ public class GameService {
         game.setBoard(new int[3][3]);
         game.setId(UUID.randomUUID().toString());
         game.setPlayerX(player);
+        game.setNextPlayer(PlayerType.X);
         game.setStatus(NEW);
         GameData.getInstance().setGame(game);
         return game;
@@ -59,7 +60,13 @@ public class GameService {
         if (game.getStatus().equals(FINISHED)) {
             throw new InvalidGameException(InvalidGameException.MESSAGE_GAME_FINISHED);
         }
+        if(game.getNextPlayer() != gameStep.getType()) {
+            throw new InvalidGameException(InvalidGameException.MESSAGE_INVALID_GAME_STEP);
+        }
         int[][] board = game.getBoard();
+        if(board[gameStep.getPosX()][gameStep.getPosY()] != 0) {
+            throw new InvalidGameException(InvalidGameException.MESSAGE_INVALID_SQUARE);
+        }
         board[gameStep.getPosX()][gameStep.getPosY()] = gameStep.getType().getValue();
 
         Boolean xWinner = checkWinner(game.getBoard(), PlayerType.X);
@@ -69,6 +76,12 @@ public class GameService {
             game.setWinner(PlayerType.X);
         } else if (Boolean.TRUE.equals(oWinner)) {
             game.setWinner(PlayerType.O);
+        }
+
+        if(game.getNextPlayer() == PlayerType.X) {
+            game.setNextPlayer(PlayerType.O);
+        } else {
+            game.setNextPlayer(PlayerType.X);
         }
 
         GameData.getInstance().setGame(game);
