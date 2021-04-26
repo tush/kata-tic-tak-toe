@@ -61,5 +61,6 @@ public class Game {
 
     public void setWinner(PlayerType winner) {
         this.winner = winner;
+        this.setStatus(GameStatus.FINISHED);
     }
 }

@@ -6,6 +6,7 @@ import com.tush.kata.game.exception.InvalidParamException;
 import com.tush.kata.game.model.Game;
 import com.tush.kata.game.model.GameStep;
 import com.tush.kata.game.model.Player;
+import com.tush.kata.game.model.enums.PlayerType;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -59,7 +60,43 @@ public class GameService {
         }
         int[][] board = game.getBoard();
         board[gameStep.getPosX()][gameStep.getPosY()] = gameStep.getType().getValue();
+
+        Boolean xWinner = checkWinner(game.getBoard(), PlayerType.X);
+        Boolean oWinner = checkWinner(game.getBoard(), PlayerType.O);
+
+        if (xWinner) {
+            game.setWinner(PlayerType.X);
+        } else if (oWinner) {
+            game.setWinner(PlayerType.O);
+        }
+
         GameData.getInstance().setGame(game);
         return game;
+    }
+
+    private Boolean checkWinner(int[][] board, PlayerType playerType) {
+        int[][] winCombos = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
+
+        int[] flatArray = new int[9];
+
+        int counter = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                flatArray[counter] = board[i][j];
+                counter++;
+            }
+        }
+        for (int i = 0; i < winCombos.length; i++) {
+            int winCounter = 0;
+            for (int j = 0; j < winCombos[i].length; j++) {
+                if (flatArray[winCombos[i][j]] == playerType.getValue()) {
+                    winCounter++;
+                    if (winCounter == 3) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

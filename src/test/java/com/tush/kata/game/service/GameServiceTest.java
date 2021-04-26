@@ -148,4 +148,184 @@ class GameServiceTest {
 
         assertEquals(game.getBoard()[0][0], gameStep.getType().X.getValue());
     }
+
+    @Test
+    void playGameStep_whenX_wins_thenReturns_X_as_winner() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        int[][] board = _game.getBoard();
+        board[0][0] = PlayerType.X.getValue();
+        board[0][1] = PlayerType.X.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.X, _game.getId(), 0, 2);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertNotNull(game.getWinner());
+        assertEquals(PlayerType.X.toString(), game.getWinner().toString());
+        assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
+
+    @Test
+    void playGameStep_whenO_wins_thenReturns_O_as_winner() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        int[][] board = _game.getBoard();
+        board[0][0] = PlayerType.O.getValue();
+        board[0][1] = PlayerType.O.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.O, _game.getId(), 0, 2);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertNotNull(game.getWinner());
+        assertEquals(PlayerType.O.toString(), game.getWinner().toString());
+        assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
+
+    @Test
+    void playGameStep_when_winCombination2_thenReturns_correct_winner() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        int[][] board = _game.getBoard();
+        board[1][0] = PlayerType.X.getValue();
+        board[1][1] = PlayerType.X.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.X, _game.getId(), 1, 2);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertNotNull(game.getWinner());
+        assertEquals(PlayerType.X.toString(), game.getWinner().toString());
+        assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
+
+    @Test
+    void playGameStep_when_winCombination3_thenReturns_correct_winner() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        int[][] board = _game.getBoard();
+        board[2][0] = PlayerType.X.getValue();
+        board[2][1] = PlayerType.X.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.X, _game.getId(), 2, 2);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertNotNull(game.getWinner());
+        assertEquals(PlayerType.X.toString(), game.getWinner().toString());
+        assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
+
+    @Test
+    void playGameStep_when_winCombination4_thenReturns_correct_winner() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        int[][] board = _game.getBoard();
+        board[0][0] = PlayerType.X.getValue();
+        board[1][0] = PlayerType.X.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.X, _game.getId(), 2, 0);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertNotNull(game.getWinner());
+        assertEquals(PlayerType.X.toString(), game.getWinner().toString());
+        assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
+
+    @Test
+    void playGameStep_when_winCombination5_thenReturns_correct_winner() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        int[][] board = _game.getBoard();
+        board[0][1] = PlayerType.X.getValue();
+        board[1][1] = PlayerType.X.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.X, _game.getId(), 2, 1);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertNotNull(game.getWinner());
+        assertEquals(PlayerType.X.toString(), game.getWinner().toString());
+        assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
+
+    @Test
+    void playGameStep_when_winCombination6_thenReturns_correct_winner() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        int[][] board = _game.getBoard();
+        board[0][2] = PlayerType.X.getValue();
+        board[1][2] = PlayerType.X.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.X, _game.getId(), 2, 2);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertNotNull(game.getWinner());
+        assertEquals(PlayerType.X.toString(), game.getWinner().toString());
+        assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
+
+    @Test
+    void playGameStep_when_winCombination7_thenReturns_correct_winner() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        int[][] board = _game.getBoard();
+        board[0][0] = PlayerType.X.getValue();
+        board[1][1] = PlayerType.X.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.X, _game.getId(), 2, 2);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertNotNull(game.getWinner());
+        assertEquals(PlayerType.X.toString(), game.getWinner().toString());
+        assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
+
+    @Test
+    void playGameStep_when_winCombination8_thenReturns_correct_winner() throws InvalidParamException, InvalidGameException {
+        String playerXName = "Player1";
+        String playerOName = "Player2";
+
+        Game _game = gameService.createGame(getPLayer(playerXName));
+        _game.setPlayerO(getPLayer(playerOName));
+
+        int[][] board = _game.getBoard();
+        board[0][2] = PlayerType.X.getValue();
+        board[1][1] = PlayerType.X.getValue();
+
+        GameStep gameStep = getGameStep(PlayerType.X, _game.getId(), 2, 0);
+        Game game = gameService.playGameStep(gameStep);
+
+        assertNotNull(game.getWinner());
+        assertEquals(PlayerType.X.toString(), game.getWinner().toString());
+        assertEquals(GameStatus.FINISHED.toString(), game.getStatus().toString());
+    }
 }
