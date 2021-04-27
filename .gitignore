@@ -46,3 +46,4 @@ yarn-error.log*
 /src/ui/coverage
 /src/ui/node_modules/
 
+/src/ui/build/
