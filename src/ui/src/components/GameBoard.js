@@ -1,3 +1,4 @@
+import { ToastContainer, toast } from "react-toastify";
 import Square from "./Square";
 import Button from "./Button";
 
@@ -10,6 +11,8 @@ function GameBoard({ game, onSquareClick, onJoinGame, player }) {
       game.board[posX][posY] === 0
     ) {
       onSquareClick(posX, posY, game.id, game.nextPlayer);
+    } else {
+        toast.error("Not allowed. Game Finished or Drawn. Or not your turn.");
     }
   };
 
