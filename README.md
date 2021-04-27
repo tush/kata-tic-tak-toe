@@ -79,18 +79,18 @@ The following API's are available:
 
 * Once Server is up and running, open two browser windows and visit URL [localhost:8080/](localhost:8080/)
 * A screen with form to enter Player name will be shown
-  ![Alt text](src/assets/screen1.png?raw=true "Landing Screen")
+  ![Login Screen](./src/assets/screen1.png?raw=true "Login Screen")
 * Provide Player name and click *"Submit"*
 * Once player is added successfully, a screen with *"Create"* button and *"Game List"* along with *"Refresh"* button will be shown
-  ![Alt text](src/assets/screen2.png?raw=true "Landing Screen")
+  ![Game List Screen](./src/assets/screen2.png?raw=true "Game List Screen")
 * Click *"Create"* button. Once Game is created successfully, game list will be refreshed to show new game
 * Use *"Expand"* *"Collapse"* buttons to toggle view of *Game Board*
-  ![Alt text](src/assets/screen3.png?raw=true "Landing Screen")
+  ![Game List Screen](./src/assets/screen3.png?raw=true "Game List Screen")
 * In another player's browser window, once logged in by providing Player name, same game list will be shown. 
 * Click *"Join"* button to join the game. Once joined successfully, Game Board will be refreshed. Use *Refresh* button in other player's browser window to refresh the game data
-  ![Alt text](src/assets/screen4.png?raw=true "Landing Screen")
+  ![Join Game Screen](./src/assets/screen4.png?raw=true "Join Game Screen")
 * Click *"Board Cell"* to make a move. Use *Refresh* button in other player's browser window to refresh the game data. Repeat this step for performing game moves.
-  ![Alt text](src/assets/screen5.png?raw=true "Landing Screen")
-  ![Alt text](src/assets/screen6.png?raw=true "Landing Screen")
+  ![Game Play Screen](./src/assets/screen5.png?raw=true "Game Play Screen")
+  ![Game Play Screen](./src/assets/screen6.png?raw=true "Game Play Screen")
 * Once game is finished or drawn, appropriate game status and winner information will be shown
-  ![Alt text](src/assets/screen7.png?raw=true "Landing Screen")
+  ![Game Finished Screen](./src/assets/screen7.png?raw=true "Game Finished Screen")
