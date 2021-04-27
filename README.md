@@ -17,6 +17,9 @@ For further reference, please consider the following sections:
 * Build Steps
   * Clone [https://github.com/tush/kata-tic-tak-toe.git](https://github.com/tush/kata-tic-tak-toe.git)
   * Using Terminal / CMD navigate to the project directory
+  * Using Terminal / CMD navigate to the UI directory *"cd src/ui/"*
+  * On the *ui* directory, fire *"yarn install"* or *"npm install"* command using Terminal / CMD
+  * On the *ui* directory, fire *"yarn build"* or *"npm run build"* command using Terminal / CMD
   * On the project (kata-tic-tak-toe) root directory, fire *"mvn package"* command using Terminal / CMD
   * On the project (kata-tic-tak-toe) root directory, fire *"mvn spring-boot:run"* command using Terminal / CMD
   * If above commands are successful, server should be up and running on port 8080: [http://localhost:8080/](http://localhost:8080/)
